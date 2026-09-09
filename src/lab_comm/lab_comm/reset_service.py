@@ -1,14 +1,13 @@
+import rclpy
+from rclpy.node import Node
 from std_srvs.srv import Trigger
-
 
 class ResetService(Node):
     def __init__(self):
         super().__init__('reset_service')
         self.counter = 0
-
         self.srv = self.create_service(
-            Trigger, 'reset_system', self.on_reset
-        )
+            Trigger, 'reset_system', self.on_reset)
 
     def on_reset(self, request, response):
         old = self.counter
@@ -17,7 +16,12 @@ class ResetService(Node):
         response.message = f'counter reset from {old}'
         return response
 
+def main():
+    rclpy.init()
+    node = ResetService()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
 
-ros2 service list -t
-
-ros2 service call /reset_system std_srvs/srv/Trigger "{}"
+if __name__ == '__main__':
+    main()

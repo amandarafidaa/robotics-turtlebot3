@@ -52,8 +52,3 @@ def generate_launch_description():
             output='screen',
         ),
     ])
-
-
-colcon build --symlink-install && source install/setup.bash
-
-ros2 launch lab_comm lab_comm.launch.py threshold:=0.7
